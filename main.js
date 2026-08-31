@@ -1,4 +1,8 @@
-﻿/* main.js — GSAP ScrollTrigger orchestration (updated) */
+﻿/* ── Skip heavy GSAP scroll animations on mobile ── */
+const isMobile = window.innerWidth <= 768 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+
+if (!isMobile) {
+/* main.js — GSAP ScrollTrigger orchestration (updated) */
 gsap.registerPlugin(ScrollTrigger);
 
 // ════════════════════════════════════════
@@ -126,3 +130,30 @@ document.querySelectorAll('.nav-link').forEach(link => {
 });
 
 window.addEventListener('resize', () => ScrollTrigger.refresh());
+} // end desktop-only block
+
+/* ── Simple mobile fade-in (always runs) ── */
+if (isMobile) {
+  gsap.registerPlugin(ScrollTrigger);
+  // Just make everything visible immediately
+  gsap.set(['.hero-eyebrow','.name-word','.hero-divider','.hero-sub','.hero-cta-row','.orb'], { clearProps: 'all' });
+  document.querySelectorAll('.name-word').forEach(el => {
+    el.style.opacity = '1'; el.style.transform = 'none';
+  });
+  document.querySelector('.hero-eyebrow').style.opacity = '1';
+  document.querySelector('.hero-eyebrow').style.transform = 'none';
+  document.querySelector('.hero-divider').style.opacity = '1';
+  document.querySelector('.hero-divider').style.transform = 'none';
+  document.querySelector('.hero-sub').style.opacity = '1';
+  document.querySelector('.hero-sub').style.transform = 'none';
+  document.querySelector('.hero-cta-row').style.opacity = '1';
+  document.querySelector('.hero-cta-row').style.transform = 'none';
+
+  // Animate sections in on scroll simply
+  document.querySelectorAll('.section-head, .skills-grid, .pcard, .contact-sub, .contact-links, .contact-footer').forEach(el => {
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  });
+  document.querySelector('.proj-head').style.opacity = '1';
+  document.querySelector('.proj-head').style.transform = 'none';
+}
