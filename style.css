@@ -235,7 +235,7 @@ body {
 
 .hero-name {
   font-family: var(--font-display);
-  font-size: clamp(4rem, 11vw, 9rem);
+  font-size: clamp(1.6rem, 8.5vw, 9rem);
   font-weight: 800;
   line-height: 0.92;
   letter-spacing: -0.02em;
@@ -647,105 +647,206 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: rgba(143,188,143,0.6); }
 
 /* ═══════════════════════════════════════════════
-   MOBILE  ≤ 768px
+   MOBILE BASE — prevent ANY horizontal overflow
 ═══════════════════════════════════════════════ */
-@media (max-width: 768px) {
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
 
-  /* ── Kill video + WebGL on mobile (biggest perf win) ── */
-  #bg-video       { display: none !important; }
-  #webgl-canvas   { display: none !important; }
-  #overlay-svg    { display: none !important; }
+/* ═══════════════════════════════════════════════
+   MOBILE  max-width: 768px
+═══════════════════════════════════════════════ */
+@media screen and (max-width: 768px) {
 
-  /* Replace with simple static gradient background */
+  /* — Kill performance-heavy layers — */
+  #bg-video      { display: none !important; }
+  #webgl-canvas  { display: none !important; }
+  #overlay-svg   { display: none !important; }
+  .orb           { display: none !important; }
+  .scroll-cue    { display: none !important; }
+
+  /* — Replace video with solid dark green — */
   #video-bg {
-    background: linear-gradient(
-      160deg,
-      #060e08 0%,
-      #0c1e10 30%,
-      #0a1a0d 60%,
-      #051008 100%
-    ) !important;
+    background: #070f09 !important;
   }
-  #video-overlay  { display: none !important; }
+  #video-overlay { display: none !important; }
 
-  /* ── Stop ALL CSS animations on mobile ── */
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.2s !important;
+  /* — Stop all CSS animations — */
+  * { animation: none !important; transition: none !important; }
+
+  /* — Prevent ALL horizontal overflow — */
+  #scroll-container,
+  .section,
+  #hero,
+  .hero-content,
+  #skills,
+  .skills-section,
+  #projects,
+  .proj-section,
+  #contact,
+  .contact-section {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 
-  /* ── Navbar ── */
-  #navbar { padding: 0.85rem 1rem; gap: 0.5rem; }
-  .nav-links { gap: 0.9rem; }
-  .nav-link  { font-size: 0.65rem; letter-spacing: 0.08em; }
-  .audio-btn { width: 32px; height: 32px; }
+  /* ── NAVBAR ── */
+  #navbar {
+    padding: 0.8rem 1rem;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+  }
+  .nav-links { gap: 0.8rem; }
+  .nav-link  { font-size: 0.62rem; letter-spacing: 0.06em; }
+  .audio-btn { width: 30px; height: 30px; flex-shrink: 0; }
 
-  /* ── Hide decorative stuff ── */
-  .orb       { display: none !important; }
-  .scroll-cue { display: none !important; }
-
-  /* ── Hero ── */
-  #hero { padding-top: 65px; overflow-x: hidden; }
+  /* ── HERO ── */
+  #hero {
+    padding: 70px 0 2rem;
+    min-height: 100svh;
+    align-items: center;
+  }
 
   .hero-content {
-    padding: 1rem 1.4rem;
     width: 100%;
-    overflow-x: hidden;
+    padding: 0 1.2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  /* ── Name — FIXED small size so it never breaks ── */
+  /* ── NAME — guaranteed single-line fit ── */
   .hero-name {
-    font-size: 2rem !important;
-    letter-spacing: 0.01em;
-    line-height: 1.0;
-    word-break: normal;
-    overflow-wrap: normal;
-    white-space: nowrap;
+    font-size: 11vw !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.01em !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    text-align: center !important;
+    overflow: hidden !important;
+  }
+  .name-word {
+    opacity: 1 !important;
+    transform: none !important;
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
   }
 
   /* ── Eyebrow ── */
-  .hero-eyebrow { gap: 0.5rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
-  .eyebrow-tag  { font-size: 0.6rem; letter-spacing: 0.12em; }
-  .eyebrow-dot  { display: none; }
+  .hero-eyebrow {
+    opacity: 1 !important;
+    transform: none !important;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+  }
+  .eyebrow-tag { font-size: 0.58rem; letter-spacing: 0.12em; }
+  .eyebrow-dot { display: none; }
 
   /* ── Divider ── */
-  .hero-divider { gap: 0.6rem; margin-bottom: 1.2rem; }
-  .div-text { font-size: 0.58rem; letter-spacing: 0.1em; }
-  .div-line { max-width: 50px; }
+  .hero-divider {
+    opacity: 1 !important;
+    transform: none !important;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+  .div-line { max-width: 40px; flex: none; width: 40px; }
+  .div-text { font-size: 0.56rem; letter-spacing: 0.08em; }
 
   /* ── Sub ── */
-  .hero-sub { font-size: 0.88rem; margin-bottom: 2rem; }
+  .hero-sub {
+    opacity: 1 !important;
+    transform: none !important;
+    font-size: 0.85rem;
+    margin-bottom: 1.8rem;
+  }
 
   /* ── CTA buttons ── */
-  .hero-cta-row { flex-direction: column; align-items: center; gap: 0.7rem; margin-bottom: 0; }
-  .cta-btn { width: 85%; padding: 0.7rem 1rem; font-size: 0.72rem; }
+  .hero-cta-row {
+    opacity: 1 !important;
+    transform: none !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+  }
+  .cta-btn { width: 80%; padding: 0.75rem 1rem; font-size: 0.72rem; }
 
-  /* ── Skills ── */
-  .skills-section { padding: 80px 1.2rem 50px; align-items: flex-start; }
-  .section-title  { font-size: 2.2rem; }
-  .skills-grid    { grid-template-columns: 1fr; gap: 1rem; }
-  .skill-group    { padding: 1.3rem; }
-  .skill-pill     { font-size: 0.7rem; }
+  /* ── SKILLS ── */
+  .skills-section {
+    padding: 80px 1.2rem 50px !important;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .section-head {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .section-title { font-size: 2rem; }
+  .skills-grid {
+    opacity: 1 !important;
+    transform: none !important;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+  }
+  .skill-group { padding: 1.2rem; }
+  .skill-pill  { font-size: 0.68rem; }
 
-  /* ── Projects ── */
-  .proj-section { padding: 80px 0 50px; }
-  .proj-head    { padding: 0 1.2rem; }
-  #proj-track   { padding: 0.8rem 1.2rem 2rem; gap: 1rem; }
-  .pcard        { width: min(320px, 88vw); }
-  .pcard-inner  { padding: 1.6rem; min-height: 360px; }
-  .pcard-title  { font-size: 1.3rem; }
-  .pcard-desc   { font-size: 0.82rem; }
+  /* ── PROJECTS ── */
+  .proj-section { padding: 80px 0 50px !important; }
+  .proj-head {
+    padding: 0 1.2rem;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  /* Disable pinned horizontal scroll on mobile — stack vertically */
+  #track-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  #proj-track {
+    transform: none !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    padding: 1rem 1.2rem 2rem !important;
+    gap: 1.2rem !important;
+  }
+  .pcard {
+    width: 100% !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .pcard-inner { padding: 1.5rem; min-height: auto; }
+  .pcard-title { font-size: 1.3rem; }
+  .pcard-desc  { font-size: 0.82rem; }
 
-  /* ── Contact ── */
-  .contact-section { padding: 80px 1.2rem 60px; }
-  .contact-card    { padding: 1.1rem; gap: 0.9rem; }
-  .contact-handle  { font-size: 0.88rem; }
-  .contact-footer  { font-size: 0.58rem; }
+  /* ── CONTACT ── */
+  .contact-section { padding: 80px 1.2rem 60px !important; }
+  .contact-inner { text-align: left; }
+  .contact-sub {
+    opacity: 1 !important; transform: none !important;
+    font-size: 0.9rem;
+  }
+  .contact-links {
+    opacity: 1 !important; transform: none !important;
+  }
+  .contact-card    { padding: 1rem; gap: 0.8rem; }
+  .contact-handle  { font-size: 0.85rem; }
+  .contact-footer {
+    opacity: 1 !important; transform: none !important;
+    font-size: 0.56rem; gap: 0.4rem;
+  }
 }
 
-/* ── Extra small phones ── */
-@media (max-width: 360px) {
-  .hero-name { font-size: 1.7rem !important; }
-  .nav-link  { font-size: 0.58rem; }
+/* ── Very small screens ── */
+@media screen and (max-width: 380px) {
+  .hero-name { font-size: 10vw !important; }
+  .nav-link  { font-size: 0.56rem; }
 }

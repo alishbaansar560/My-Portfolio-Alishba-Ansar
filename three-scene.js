@@ -1,10 +1,8 @@
 ﻿/* three-scene.js — Three.js WebGL — sage green palette */
 (function () {
-  /* ── Skip WebGL entirely on mobile for performance ── */
-  if (window.innerWidth <= 768 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
-    document.getElementById('webgl-canvas').style.display = 'none';
-    return;
-  }
+  if (window.innerWidth <= 768 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) return;
+
+  
   const canvas = document.getElementById('webgl-canvas');
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
