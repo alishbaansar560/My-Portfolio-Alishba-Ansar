@@ -660,17 +660,12 @@ html, body {
 @media screen and (max-width: 768px) {
 
   /* — Kill performance-heavy layers — */
-  #bg-video      { display: none !important; }
   #webgl-canvas  { display: none !important; }
-  #overlay-svg   { display: none !important; }
+  /* overlay restored */
   .orb           { display: none !important; }
   .scroll-cue    { display: none !important; }
 
-  /* — Replace video with solid dark green — */
-  #video-bg {
-    background: #070f09 !important;
-  }
-  #video-overlay { display: none !important; }
+
 
   /* — Stop all CSS animations — */
   * { animation: none !important; transition: none !important; }
